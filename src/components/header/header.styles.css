@@ -1,0 +1,21 @@
+.navcontainer {
+  display: grid;
+
+  grid-template-columns: 1fr 0.9fr 1fr;
+
+  grid-template-areas: "logo searchbar searchbutton ";
+  align-items: center;
+  justify-content: center;
+}
+.logo {
+  grid-area: "logo";
+  font-size: larger;
+}
+.logo > span {
+  color: #7a7676;
+}
+
+.searchbutton {
+  width: 150px;
+  margin-left: 50px;
+}
