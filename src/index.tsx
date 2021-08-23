@@ -7,11 +7,13 @@ import { SideBar } from "./components/sidebar/sidebar.component";
 import LocalizationProvider from "@material-ui/lab/LocalizationProvider";
 import { fetchNews } from "./api/fetchNews";
 import { useEffect } from "react";
+import { useState } from "react";
 export const App = () => {
+  const [news, setnews] = useState([]);
   useEffect(() => {
     const fetchnews = async () => {
       const data = await fetchNews();
-      console.log(data);
+      setnews(data.data);
     };
     fetchnews();
   }, []);
@@ -24,7 +26,7 @@ export const App = () => {
           </nav>
           <main>Main</main>
           <div id="sidebar">
-            <SideBar />
+            <SideBar news={news} />
           </div>
         </div>
       </LocalizationProvider>

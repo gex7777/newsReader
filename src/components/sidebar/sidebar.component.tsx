@@ -1,14 +1,18 @@
 import BasicDatePicker from "./datepicker/datepicker.component";
 import "./sidebar.styles.css";
-/* interface Props{
-import BasicDatePicker from './datepicker/datepicker.component';
-    newslist:string[]
-    callback:()=>void
-} */
-export const SideBar = () => {
+import { NewsListItem } from "./newslistItem/newslistitem.component";
+import { Datum } from "../../api/fetchNews";
+interface Props {
+  news: Datum[];
+  callback?: () => void;
+}
+export const SideBar: React.FC<Props> = ({ news }) => {
   return (
     <div className="sidebar">
       <BasicDatePicker />
+      {news.map((item) => (
+        <NewsListItem {...item} />
+      ))}
     </div>
   );
 };

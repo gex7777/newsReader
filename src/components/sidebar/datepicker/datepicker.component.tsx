@@ -11,13 +11,14 @@ export default function BasicDatePicker() {
   return (
     <LocalizationProvider dateAdapter={AdapterDateFns}>
       <DatePicker
-        className="datepicker"
         label="Enter range"
         value={value}
         onChange={(newValue) => {
           setValue(newValue);
         }}
-        renderInput={(params) => <TextField {...params} />}
+        renderInput={(params) => (
+          <TextField className="datepicker" {...params} />
+        )}
       />
     </LocalizationProvider>
   );
