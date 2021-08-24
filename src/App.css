@@ -1,10 +1,5 @@
-:root {
-  --main-radius: 5px;
-  --main-padding: 5px;
-}
-
 body {
-  font-family: "Inter", sans-serif;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 
 .appcontainer {
@@ -16,10 +11,8 @@ body {
     "nav nav nav"
     "sidebar main main";
   grid-gap: 0.2rem;
-  font-weight: 800;
 
   color: #004d40;
-  text-align: center;
 }
 
 nav {
@@ -41,15 +34,6 @@ main {
   grid-area: sidebar;
   border-radius: var(--main-radius);
   padding-top: var(--main-padding);
-}
-
-a {
-  text-align: center;
-  display: block;
-  font-family: inherit;
-  text-decoration: none;
-  font-weight: bold;
-  margin: 1rem;
 }
 
 @media only screen and (max-width: 550px) {

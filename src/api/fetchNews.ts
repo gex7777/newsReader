@@ -1,8 +1,10 @@
+import { convertDates } from "./../utils/covertodate";
 export const fetchNews = async () => {
   const apikey = "IHEwbeb7kN3f7I3Qizc1FqAJVexvcKUE";
   const endpoint = `https://get.scrapehero.com/news-api/news/?q=iphone&x-api-key=${apikey}`;
   const data = await (await fetch(endpoint)).json();
-  return data.result;
+
+  return convertDates(data.result.data);
 };
 
 export interface Newsdata {
@@ -21,6 +23,7 @@ export interface Datum {
   parent_classification: ParentClassification;
   child_classification?: string;
   publication: string;
+  callback?: any;
 }
 
 export enum ParentClassification {

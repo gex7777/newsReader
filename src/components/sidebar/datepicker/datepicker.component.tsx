@@ -1,23 +1,28 @@
 import * as React from "react";
 import TextField from "@material-ui/core/TextField";
+import DateRangePicker from "@material-ui/lab/DateRangePicker";
 import AdapterDateFns from "@material-ui/lab/AdapterDateFns";
 import LocalizationProvider from "@material-ui/lab/LocalizationProvider";
-import DatePicker from "@material-ui/lab/DatePicker";
-import "./datepicker.styles.css";
+import Box from "@material-ui/core/Box";
 
-export default function BasicDatePicker() {
-  const [value, setValue] = React.useState(null);
+export default function BasicDateRangePicker() {
+  const [value, setValue] = React.useState<any>([null, null]);
 
   return (
     <LocalizationProvider dateAdapter={AdapterDateFns}>
-      <DatePicker
-        label="Enter range"
+      <DateRangePicker
+        startText="Enter date range from "
+        endText=""
         value={value}
         onChange={(newValue) => {
           setValue(newValue);
         }}
-        renderInput={(params) => (
-          <TextField className="datepicker" {...params} />
+        renderInput={(startProps, endProps) => (
+          <React.Fragment>
+            <TextField {...startProps} />
+            <Box sx={{ mx: 2 }}> to </Box>
+            <TextField {...endProps} />
+          </React.Fragment>
         )}
       />
     </LocalizationProvider>

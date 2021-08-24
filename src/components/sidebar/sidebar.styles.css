@@ -2,3 +2,12 @@
   padding: 0 1rem;
   padding-top: 1rem;
 }
+.date,
+.pub {
+  color: gray;
+}
+.pub {
+  font-weight: 100;
+  display: flex;
+  align-items: center;
+}

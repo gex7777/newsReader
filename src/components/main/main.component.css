@@ -1,0 +1,19 @@
+.maincontainer {
+  padding-top: 10%;
+  padding-left: 10%;
+  padding-right: 10%;
+}
+.maintitle {
+  font-size: 2rem;
+  font-weight: 400;
+}
+.publisherndate {
+  display: flex;
+  justify-content: space-between;
+}
+.publishername {
+  color: rgb(42, 102, 212);
+}
+.newsdate {
+  color: rgb(110, 110, 110);
+}
