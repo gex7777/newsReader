@@ -10,7 +10,7 @@ export const MainReader: React.FC<props> = ({ news }) => {
         <>
           <div
             className="maincontainer"
-            style={{ maxHeight: 750, overflow: "auto" }}
+            style={{ maxHeight: 725, overflow: "auto" }}
           >
             <div className="maintitle">{news.title}</div>
             <div className="publisherndate">
