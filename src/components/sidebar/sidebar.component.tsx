@@ -1,7 +1,7 @@
 import "./sidebar.styles.css";
 import { NewsListItem } from "./newslistItem/newslistitem.component";
 import { Datum } from "../../api/fetchNews";
-import { Divider, List } from "@material-ui/core";
+import { List } from "@material-ui/core";
 import { BasicDateRangePicker } from "./datepicker/datepicker.component";
 interface Props {
   news: Datum[];

@@ -1,11 +1,13 @@
 import * as React from "react";
-import TextField from "@material-ui/core/TextField";
-import DateRangePicker, { DateRange } from "@material-ui/lab/DateRangePicker";
+import { DateRange } from "@material-ui/lab/DateRangePicker";
 import AdapterDateFns from "@material-ui/lab/AdapterDateFns";
 import LocalizationProvider from "@material-ui/lab/LocalizationProvider";
-import Box from "@material-ui/core/Box";
-import "./datepicker.styles.css";
 import { useEffect } from "react";
+import { DatePicker } from "antd";
+import moment from "moment";
+import "./datepicker.styles.css";
+import "antd/dist/antd.css";
+const { RangePicker } = DatePicker;
 interface props {
   filternews?: any;
 }
@@ -13,28 +15,25 @@ interface props {
 export const BasicDateRangePicker: React.FC<props> = ({ filternews }) => {
   const [value, setValue] = React.useState<DateRange<Date>>([null, null]);
   useEffect(() => {
-    console.log(value);
-    if (value.every((e) => e !== null)) {
-      filternews(value);
-    }
+    filternews(value);
+    // eslint-disable-next-line
   }, [value]);
-
+  function onChange(dates: any) {
+    if (dates === null) {
+      setValue([null, null]);
+      return;
+    }
+    setValue([moment(dates[0]).toDate(), moment(dates[1]).toDate()]);
+  }
   return (
     <LocalizationProvider dateAdapter={AdapterDateFns}>
-      <DateRangePicker
-        startText="Enter date range "
-        endText=""
-        value={value}
-        onChange={(newValue) => {
-          setValue(newValue);
+      <RangePicker
+        style={{ width: "100%" }}
+        ranges={{
+          Today: [moment(), moment()],
+          "This Month": [moment().startOf("month"), moment().endOf("month")],
         }}
-        renderInput={(startProps, endProps) => (
-          <React.Fragment>
-            <TextField {...startProps} />
-            <Box sx={{ mx: 2 }}> to </Box>
-            <TextField {...endProps} />
-          </React.Fragment>
-        )}
+        onChange={onChange}
       />
     </LocalizationProvider>
   );

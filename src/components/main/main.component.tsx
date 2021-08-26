@@ -4,25 +4,23 @@ interface props {
   news: Datum | undefined;
 }
 export const MainReader: React.FC<props> = ({ news }) => {
-  {
-    if (news) {
-      return (
-        <>
-          <div
-            className="maincontainer"
-            style={{ maxHeight: 725, overflow: "auto" }}
-          >
-            <div className="maintitle">{news.title}</div>
-            <div className="publisherndate">
-              <p className="publishername">{news.publication}</p>
-              <p className="newsdate">{news.date}</p>
-            </div>
-            <p className="newsdata">{news.content}</p>
+  if (news) {
+    return (
+      <>
+        <div
+          className="maincontainer"
+          style={{ maxHeight: 730, overflow: "auto" }}
+        >
+          <div className="maintitle">{news.title}</div>
+          <div className="publisherndate">
+            <p className="publishername">{news.publication}</p>
+            <p className="newsdate">{news.date}</p>
           </div>
-        </>
-      );
-    } else {
-      return <div>select a news article</div>;
-    }
+          <p className="newsdata">{news.content}</p>
+        </div>
+      </>
+    );
+  } else {
+    return <div>select a news article</div>;
   }
 };

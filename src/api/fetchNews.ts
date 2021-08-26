@@ -9,7 +9,7 @@ export const fetchNews = async (
 ) => {
   const apikey = "IHEwbeb7kN3f7I3Qizc1FqAJVexvcKUE";
   const endpoint = `https://get.scrapehero.com/news-api/news/?q=${query}${
-    sentiment != "" ? "&sentiment" : ""
+    sentiment !== "" ? "&sentiment" : ""
   }${sentiment}&start_date=${start_date}&end_date=${end_date}&source_id=${source_id}&category_id=${category_id}&x-api-key=${apikey}`;
   const data = await (await fetch(endpoint)).json();
 

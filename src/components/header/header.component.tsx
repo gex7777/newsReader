@@ -4,8 +4,10 @@ import { SearchBar } from "./searchbar/searchbar.component";
 
 import { useState } from "react";
 import Backdrop from "@material-ui/core/Backdrop";
-
-export const Header = () => {
+interface props {
+  searchValue?: any;
+}
+export const Header: React.FC<props> = ({ searchValue }) => {
   const [open, setOpen] = useState(false);
 
   const handleClose = () => {
@@ -14,13 +16,16 @@ export const Header = () => {
   const handleToggle = () => {
     setOpen(!open);
   };
+  const callback = (value: string) => {
+    searchValue(value);
+  };
   return (
     <>
       <div className="navcontainer">
         <div className="logo">
           News<span>Reader</span>
         </div>
-        <SearchBar />
+        <SearchBar searchValue={callback} />
         <Backdrop
           sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
           open={open}

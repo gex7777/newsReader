@@ -24,9 +24,14 @@ export const App = () => {
     // eslint-disable-next-line
   }, []);
   const renderArticle = (id: string) => {
-    setNewsToDisplay(news.find((e) => e.id === id));
+    setNewsToDisplay(filtered.find((e) => e.id === id));
   };
   const filternews = (date: Date[]) => {
+    if (date === null || date[0] === null) {
+      setfiltered([...news]);
+      return;
+    }
+
     const filteredNews = news.filter((news) => {
       let format = "LL";
       let newstime = moment(news.date, format);
@@ -38,14 +43,18 @@ export const App = () => {
         return false;
       }
     });
+    console.log(filteredNews);
     setfiltered(filteredNews);
+  };
+  const searchNews = (value: string) => {
+    fetchNews(value).then((res) => setfiltered(res));
   };
   return (
     <>
       <LocalizationProvider dateAdapter={DateAdapter}>
         <div className="appcontainer">
           <nav>
-            <Header />
+            <Header searchValue={searchNews} />
           </nav>
           <main>
             <MainReader news={newsToDisplay} />

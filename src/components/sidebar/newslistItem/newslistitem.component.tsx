@@ -23,19 +23,22 @@ export const NewsListItem: React.FC<Datum> = ({
         setcolor("red");
         break;
     }
+    // eslint-disable-next-line
   }, []);
 
   return (
-    <ListItem onClick={() => callback(id)}>
-      <ListItemText>
-        <h3 className="date">{date}</h3>
-        <p className="heading">{title}</p>
-        <div className="pub">
-          <FiberManualRecordIcon style={{ color: color }} />
-          <h3>{publication}</h3>
-        </div>
-      </ListItemText>
+    <>
+      <ListItem onClick={() => callback(id)} button={true}>
+        <ListItemText>
+          <h3 className="date">{date}</h3>
+          <p className="heading">{title}</p>
+          <div className="pub">
+            <FiberManualRecordIcon style={{ color: color }} />
+            <h3 style={{ margin: 0 }}>{publication}</h3>
+          </div>
+        </ListItemText>
+      </ListItem>
       <Divider />
-    </ListItem>
+    </>
   );
 };
