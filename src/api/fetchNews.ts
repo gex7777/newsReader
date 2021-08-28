@@ -43,4 +43,5 @@ export enum ParentClassification {
 export enum Sentiment {
   Neutral = "Neutral",
   Positive = "Positive",
+  Negative = "Negative",
 }

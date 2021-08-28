@@ -43,6 +43,9 @@ export const App = () => {
         return false;
       }
     });
+    const advancedSearch = (query: any) => {
+      console.log(query);
+    };
     console.log(filteredNews);
     setfiltered(filteredNews);
   };
