@@ -67,10 +67,11 @@ export const FormDialog: React.FC<DialogProps> = ({ callback }) => {
   const handleClickOpen = () => {
     setOpen(true);
   };
-  useEffect(() => {
+  /*useEffect(() => {
     getNumberOffilters();
     // eslint-disable-next-line
   }, []);
+  */
   const handleClose = () => {
     setOpen(false);
   };
