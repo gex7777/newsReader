@@ -4,6 +4,7 @@ body {
 
 .appcontainer {
   display: grid;
+
   height: 100vh;
   grid-template-columns: 1fr 1fr 1fr;
   grid-template-rows: 0.2fr 1.5fr;
@@ -11,29 +12,27 @@ body {
     "nav nav nav"
     "sidebar main main";
   grid-gap: 0.2rem;
-
-  color: #004d40;
 }
 
 nav {
-  background: #a7ffeb;
+  box-shadow: 0 5px 6px -6px #999;
   grid-area: nav;
   border-radius: var(--main-radius);
   padding-top: var(--main-padding);
 }
 
 main {
-  background: #84ffff;
   grid-area: main;
   border-radius: var(--main-radius);
   padding-top: var(--main-padding);
 }
 
 #sidebar {
-  background: #18ffff;
   grid-area: sidebar;
   border-radius: var(--main-radius);
   padding-top: var(--main-padding);
+  -webkit-box-shadow: 1px 1px 0 0 #999;
+  box-shadow: 1px 0 0 0 #999;
 }
 
 @media only screen and (max-width: 550px) {

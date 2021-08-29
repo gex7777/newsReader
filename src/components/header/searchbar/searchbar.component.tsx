@@ -6,10 +6,16 @@ import SearchIcon from "@material-ui/icons/Search";
 interface props {
   searchValue?: any;
 }
-export const SearchBar: React.FC<props> = ({ searchValue }) => {
-  const [value, setvalue] = useState("");
+const searchValueFromLocalStorage = localStorage.getItem("searchValue") || "";
 
-  useEffect(() => {}, [value]);
+export const SearchBar: React.FC<props> = ({ searchValue }) => {
+  const [value, setvalue] = useState(searchValueFromLocalStorage);
+
+  useEffect(() => {
+    searchValue(value);
+    localStorage.setItem("searchValue", value);
+    // eslint-disable-next-line
+  }, [value]);
   const submitForSearch = (e: React.KeyboardEvent) => {
     if (e.keyCode === 13) {
       searchValue(value);
@@ -17,7 +23,8 @@ export const SearchBar: React.FC<props> = ({ searchValue }) => {
   };
   return (
     <TextField
-      label="press enter to search"
+      label="search"
+      value={value}
       onChange={(e) => setvalue(e.target.value)}
       onKeyDown={submitForSearch}
       size="small"

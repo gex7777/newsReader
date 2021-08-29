@@ -9,7 +9,9 @@
 }
 .logo {
   grid-area: "logo";
-  font-size: larger;
+  font-size: 2rem;
+  font-weight: 600;
+  color: #4182e4;
 }
 .logo > span {
   color: #7a7676;

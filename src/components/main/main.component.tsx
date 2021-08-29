@@ -21,6 +21,10 @@ export const MainReader: React.FC<props> = ({ news }) => {
       </>
     );
   } else {
-    return <div>select a news article</div>;
+    return (
+      <div className="emptyView">
+        <h1>select a news article</h1>
+      </div>
+    );
   }
 };

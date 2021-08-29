@@ -11,10 +11,13 @@ import { useState } from "react";
 import { MainReader } from "./components/main/main.component";
 import moment from "moment";
 import "./App.css";
+import { Source } from "./api/fetchSources";
+import { Categories } from "./api/fetchCategories";
 export const App = () => {
   const [news, setnews] = useState<Datum[]>([]);
   const [filtered, setfiltered] = useState<Datum[]>([]);
   const [newsToDisplay, setNewsToDisplay] = useState<Datum>();
+  const [searchValue, setSearchValue] = useState("iphone");
   useEffect(() => {
     fetchNews().then((res) => {
       setnews(res);
@@ -43,21 +46,57 @@ export const App = () => {
         return false;
       }
     });
-    const advancedSearch = (query: any) => {
-      console.log(query);
-    };
+
     console.log(filteredNews);
     setfiltered(filteredNews);
   };
   const searchNews = (value: string) => {
-    fetchNews(value).then((res) => setfiltered(res));
+    if (typeof value !== "undefined") {
+      setSearchValue(value);
+      fetchNews({ query: value }).then((res) => setfiltered(res));
+    }
+  };
+  const advancedSearch = (query: any) => {
+    console.log(query);
+
+    let categoryQ, sourceQ, sentimentQ;
+    if (
+      typeof query.categoryQuery.categories !== "undefined" &&
+      query.categoryQuery.categories.length > 0
+    ) {
+      categoryQ = query.categoryQuery.categories
+        .map((e: Categories) => e.iptc_code)
+        .join("%2C");
+    }
+    if (
+      typeof query.sourceQuery.sources !== "undefined" &&
+      query.sourceQuery.sources.length > 0
+    ) {
+      sourceQ = query.sourceQuery.sources.map((e: Source) => e.id).join("%2C");
+    }
+    if (typeof query.sentimentQuery.sentiments.sentiment !== "undefined") {
+      sentimentQ = query.sentimentQuery.sentiments.sentiment;
+    }
+
+    console.log(categoryQ, sourceQ, sentimentQ);
+    console.log(
+      fetchNews({
+        query: searchValue,
+        sentiment: sentimentQ,
+        category_id: categoryQ,
+        source_id: sourceQ,
+      }).then((res) => setfiltered(res))
+    );
   };
   return (
     <>
       <LocalizationProvider dateAdapter={DateAdapter}>
         <div className="appcontainer">
           <nav>
-            <Header searchValue={searchNews} />
+            <Header
+              searchValue={searchNews}
+              advancedSearchQuery={advancedSearch}
+            />
           </nav>
           <main>
             <MainReader news={newsToDisplay} />

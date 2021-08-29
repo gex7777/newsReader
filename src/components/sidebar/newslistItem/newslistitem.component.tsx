@@ -19,7 +19,8 @@ export const NewsListItem: React.FC<Datum> = ({
       case Sentiment.Neutral:
         setcolor("gray");
         break;
-      default:
+
+      case Sentiment.Negative:
         setcolor("red");
         break;
     }

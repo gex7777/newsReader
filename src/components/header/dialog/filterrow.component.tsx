@@ -21,7 +21,7 @@ interface Default {
 }
 const sentiments = [
   {
-    sentiment: "Postive",
+    sentiment: "Positive",
   },
   {
     sentiment: "Negative",
@@ -30,15 +30,17 @@ const sentiments = [
     sentiment: "Neutral",
   },
 ];
-type optiontypes = Categories[] | Source[] | Sentiments[] | Default;
+//type optiontypes = Categories[] | Source[] | Sentiments[] | Default;
 interface props {
   callback?: any;
 }
 export const FilterRow: React.FC<props> = ({ callback }) => {
   const [options, setoptions] = useState<any>([{ default: "" }]);
-  const [selectedValues, setSelectedValues] = useState<any>([]);
+  //const [selectedValues, setSelectedValues] = useState<any>([]);
   const handleOptions = (e: SelectChangeEvent) => {
     console.log(e.target.value);
+    setoptions([{ default: "" }]);
+
     switch (e.target.value.toString()) {
       case "20":
         fetchSources().then((res) => setoptions(res));
@@ -103,7 +105,6 @@ export const FilterRow: React.FC<props> = ({ callback }) => {
             <Autocomplete
               onChange={(event, value) => callback({ sentiments: value })}
               style={{ minWidth: 600 }}
-              multiple
               id="tags-standard"
               options={options}
               getOptionLabel={(option: Sentiments) => option.sentiment}

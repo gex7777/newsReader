@@ -32,6 +32,7 @@ export const BasicDateRangePicker: React.FC<props> = ({ filternews }) => {
         ranges={{
           Today: [moment(), moment()],
           "This Month": [moment().startOf("month"), moment().endOf("month")],
+          "Last 60 Days": [moment().subtract(60, "days"), moment()],
         }}
         onChange={onChange}
       />

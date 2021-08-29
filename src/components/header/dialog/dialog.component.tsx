@@ -1,22 +1,15 @@
 import React, { useEffect, useState } from "react";
 import Button from "@material-ui/core/Button";
-import TextField from "@material-ui/core/TextField";
+
 import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
-import DialogContentText from "@material-ui/core/DialogContentText";
+
 import DialogTitle from "@material-ui/core/DialogTitle";
-import {
-  Autocomplete,
-  Box,
-  FormControl,
-  IconButton,
-  InputLabel,
-  MenuItem,
-} from "@material-ui/core";
+import { IconButton } from "@material-ui/core";
 import CloseIcon from "@material-ui/icons/Close";
-import Select, { SelectChangeEvent } from "@material-ui/core/Select";
-import { fetchSources, Source } from "./../../../api/fetchSources";
+
+import { Source } from "./../../../api/fetchSources";
 import { FilterRow } from "./filterrow.component";
 export interface DialogTitleProps {
   id: string;
@@ -26,6 +19,7 @@ export interface DialogTitleProps {
 interface DialogProps {
   callback?: any;
 }
+
 const BootstrapDialogTitle = (props: DialogTitleProps) => {
   const { children, onClose, ...other } = props;
 
@@ -49,26 +43,39 @@ const BootstrapDialogTitle = (props: DialogTitleProps) => {
     </DialogTitle>
   );
 };
+const getQueriesFromLocalstorage = JSON.parse(
+  localStorage.getItem("query") || "[]"
+);
+
 export const FormDialog: React.FC<DialogProps> = ({ callback }) => {
   const [numberFilters, setNumberFilters] = useState(1);
   const [open, setOpen] = React.useState(false);
-  const [query, setQuery] = useState<any>([]);
-  const [categoryQuery, setcategoryQuery] = useState<any>([]);
-  const [sourceQuery, setsourceQuery] = useState<any>([]);
-  const [sentimentQuery, setSentimentQuery] = useState<any>([]);
+  const [query, setQuery] = useState<any>(getQueriesFromLocalstorage);
+  const [categoryQuery, setcategoryQuery] = useState<any>({ categories: [] });
+  const [sourceQuery, setsourceQuery] = useState<any>({ sources: [] });
+  const [objsToRender, setObjsToRender] = useState<any>([]);
+  const [sentimentQuery, setSentimentQuery] = useState<any>({ sentiments: [] });
   const [options, setoptions] = useState<Source[]>([
     { id: 1, name: "", domain: "us.cnn.com" },
   ]);
-
+  useEffect(() => {
+    setQuery({ categoryQuery, sourceQuery, sentimentQuery });
+  }, [categoryQuery, sentimentQuery, sourceQuery]);
+  useEffect(() => {
+    localStorage.setItem("query", JSON.stringify(query));
+  }, [query]);
   const handleClickOpen = () => {
     setOpen(true);
   };
-
+  useEffect(() => {
+    getNumberOffilters();
+    // eslint-disable-next-line
+  }, []);
   const handleClose = () => {
     setOpen(false);
   };
   console.log(open);
-  const handleOptions = (e: SelectChangeEvent) => {
+  /* const handleOptions = (e: SelectChangeEvent) => {
     console.log(e.target.value);
     switch (e.target.value.toString()) {
       case "20":
@@ -77,7 +84,7 @@ export const FormDialog: React.FC<DialogProps> = ({ callback }) => {
       case "10":
         break;
     }
-  };
+  }; */
   const getQueryValues = (arrayValues: any) => {
     if ("categories" in arrayValues) {
       setcategoryQuery(arrayValues);
@@ -87,12 +94,45 @@ export const FormDialog: React.FC<DialogProps> = ({ callback }) => {
       setSentimentQuery(arrayValues);
     }
   };
-
-  const onsubmit = () => {
-    setQuery({ categoryQuery, sourceQuery, sentimentQuery });
+  const getNumberOffilters = () => {
+    let objs: any = [];
+    let count = 1;
+    if (
+      typeof query.categoryQuery.categories !== "undefined" &&
+      query.categoryQuery.categories.length > 0
+    ) {
+      count++;
+      objs = [
+        ...objs,
+        { option: "10", values: query.categoryQuery.categories },
+      ];
+    }
+    if (
+      typeof query.sourceQuery.sources !== "undefined" &&
+      query.sourceQuery.sources.length > 0
+    ) {
+      count++;
+      objs = [...objs, { option: "10", values: query.sourceQuery.sources }];
+    }
+    if (typeof query.sentimentQuery.sentiments.sentiment !== "undefined") {
+      count++;
+      objs = [
+        ...objs,
+        { option: "20", values: query.sentimentQuery.sentiments },
+      ];
+    }
+    if (count === 4) {
+      count = 3;
+    }
+    setNumberFilters(count);
+    setObjsToRender(objs);
   };
-
-  console.log(query);
+  const onsubmit = () => {
+    if (query.length !== 0) {
+      callback(query);
+    }
+    handleClose();
+  };
 
   return (
     <>
@@ -139,7 +179,7 @@ export const FormDialog: React.FC<DialogProps> = ({ callback }) => {
             Cancel
           </Button>
           <Button onClick={onsubmit} variant="outlined" color="primary">
-            Search
+            Show Results
           </Button>
         </DialogActions>
       </Dialog>

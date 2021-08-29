@@ -17,3 +17,8 @@
 .newsdate {
   color: rgb(110, 110, 110);
 }
+.emptyView {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
